@@ -2,7 +2,7 @@
 
 //dia 12/08, continuando as aulas do w3schools, comecando em while, for, continue, etc
 
-int main() {
+int main() {  //essa parte esta comentada pra fora porque eh uma sequencia de numeros grande
  /*   int i = 0;
 
     while (i <= 69420) {
