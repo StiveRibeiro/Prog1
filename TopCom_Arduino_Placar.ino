@@ -13,113 +13,103 @@
   #define pinoBotaoZerar 2
 
   byte n0[8] = { 
-    B01110000,  //0
-    B10001000,
-    B10011000,
-    B10101000,
-    B11001000,
-    B10001000,
-    B01110000,
-    B00000000,
+    B00111000,  //0
+    B01000100,
+    B01001100,
+    B01010100,
+    B01100100,
+    B01000100,
+    B00111000,
   };
 
   byte n1[8] = {
-    B01000000,  //1
-    B11000000,
-    B01000000,
-    B01000000,
-    B01000000,
-    B01000000,
-    B11100000,
-    B00000000,
+    B00010000,  //1
+    B00110000,
+    B00010000,
+    B00010000,
+    B00010000,
+    B00010000,
+    B00111000,
   };
 
   byte n2[8] = {
-    B01110000,  //2
-    B10001000,
+    B00111000,  //2
+    B01000100,
+    B00000100,
     B00001000,
     B00010000,
     B00100000,
-    B01000000,
-    B11111000,
-    B00000000,
+    B01111100,
   };
 
   byte n3[8] = {
-    B11111000,  //3
-    B00010000,
-    B00100000,
+    B01111100,  //3
+    B00001000,
     B00010000,
     B00001000,
-    B10001000,
-    B01110000,
-    B00000000,
+    B00000100,
+    B01000100,
+    B00111000,
   };
 
   byte n4[8] = {
-    B00010000,  //4
-    B00110000,
-    B01010000,
-    B10010000,
-    B11111000,
-    B00010000,
-    B00010000,
-    B00000000,
+    B00001000,  //4
+    B00011000,
+    B00101000,
+    B01001000,
+    B01111100,
+    B00001000,
+    B00001000,
   };
 
   byte n5[8] = {
-    B11111000,  //5
-    B10000000,
-    B11110000,
-    B00001000,
-    B00001000,
-    B10001000,
-    B01110000,
-    B00000000,
+    B01111100,  //5
+    B01000000,
+    B01111000,
+    B00000100,
+    B00000100,
+    B01000100,
+    B00111000,
   };
 
   byte n6[8] = {
-    B00110000,  //6
+    B00011000,  //6
+    B00100000,
     B01000000,
-    B10000000,
-    B11110000,
-    B10001000,
-    B10001000,
-    B01110000,
-    B00000000,
+    B01111000,
+    B01000100,
+    B01000100,
+    B00111000,
   };
 
   byte n7[8] = {
-    B11111000,  //7
-    B10001000,
+    B01111100,  //7
+    B01000100,
+    B00000100,
     B00001000,
     B00010000,
-    B00100000,
-    B00100000,
-    B00100000,
-    B00000000,
+    B00010000,
+    B00010000,
   };
 
   byte n8[8] = {
-    B01110000,  //8
-    B10001000,
-    B10001000,
-    B01110000,
-    B10001000,
-    B10001000,
-    B01110000,
-    B00000000,
+    B00111000,  //8
+    B01000100,
+    B01000100,
+    B00111000,
+    B01000100,
+    B01000100,
+    B00111000,
   };
 
   byte n9[8] = {
-    B01110000,  //9
-    B10001000,
-    B10001000,
-    B01111000,
+    B00111000,  //9
+    B01000100,
+    B01000100,
+    B00111100,
+    B00000100,
     B00001000,
-    B00010000,
-    B01100000,
-    B00000000,
+    B00110000,
   };
 
   byte apagado[8] = {
@@ -130,11 +120,9 @@
     B00000000,
     B00000000,
     B00000000,
-    B00000000,
   };
 
   byte apoio[8] = {
-    B00000000,
     B00000000,
     B00000000,
     B00000000,
@@ -186,8 +174,188 @@
   }
 
   void loop(){
-    
+
+    leituraBotoes();
+
+    stringPontosP1 = String(pontosP1);
+    stringPontosP2 = String(pontosP2);
+
+    if (pontosP1 < 10) {
+      imprimeNumero(0, stringPontosP1[1]);
+      imprimeNumero(1, stringPontosP1[0]);
+    } else {
+        imprimeNumero(0, stringPontosP1[1]);
+        imprimeNumero(1, stringPontosP1[0]);
+      }
+
+    if (pontosP2 < 10) {
+      imprimeNumero(2, stringPontosP2[0]);
+      imprimeNumero(3, stringPontosP2[1]);
+    } else {
+        imprimeNumero(2, stringPontosP2[1]);
+        imprimeNumero(3, stringPontosP2[0]);
+    }
+
+    delay(100);
   }
+
+  void imprimeNumero (int digito, char texto) {
+
+    switch (texto) {
+        case '0':
+          if (digito == 3 || digito == 1) {
+            for (int i = 0; i < 8; i++) {
+              apoio[i] = n0[i];
+              apoio[i] >>= 1;
+            }
+            if (digito == 1) inserirTraco(digito);
+              imprimeBloco(digito, apoio);
+          } else {
+              imprimeBloco(digito, n0);
+        }
+      break;
+
+        case '1':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n1[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n1);
+        }
+        break;
+
+      case '2':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n2[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n2);
+        }
+        break;
+
+      case '3':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n3[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n3);
+        }
+        break;
+
+      case '4':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n4[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n4);
+        }
+        break;
+
+      case '5':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n5[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n5);
+        }
+        break;
+
+      case '6':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n6[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n6);
+        }
+        break;
+
+      case '7':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n7[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n7);
+        }
+        break;
+
+      case '8':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n8[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n8);
+        }
+        break;
+
+      case '9':
+        if (digito == 3 || digito == 1) {
+          for (int i = 0; i < 8; i++) {
+            apoio[i] = n9[i];
+            apoio[i] >>= 1;
+          }
+          if (digito == 1) inserirTraco(digito);
+          imprimeBloco(digito, apoio);
+        } else {
+          imprimeBloco(digito, n9);
+        }
+        break;
+
+      default:
+        imprimeBloco(digito, apagado);
+        break;
+    }
+
+    for (int i = 0; i < 8; i++) {
+      apoio[i] = zero;
+    }
+
+  }
+
+  void inserirTraco(int digito) {
+    apoio[2] |= B10000000;
+    apoio[3] |= B10000000;
+    apoio[4] |= B10000000;
+  }
+
+  void imprimeBloco(int lcd, byte character[]) {
+    int i = 0;
+    for (i=0; i < 8; i++) {
+      matrizLed.setRow(lcd, i, character[i]);
+    }
+  }
+
   void leituraBotoes(){
 
     if(digitalRead(pinoBotaoMais1) == LOW) 
@@ -219,4 +387,3 @@
     if (pontosP2 <= 0)
       pontosP2 = 0;
  }
-                   
