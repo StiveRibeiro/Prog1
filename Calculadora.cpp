@@ -7,7 +7,6 @@ using namespace std;
 
 int op;
 float n1, n2, n3;
-char r;
 
 int main(){
 
